@@ -5,6 +5,7 @@ A simple wrapper for [Performance API](https://developer.mozilla.org/en-US/docs/
 
 ## Usage
 Basic usage is:
+
 1. Import the library from 'performances'
   - `import Performances from 'performances'`;
 2. Instantiate the Performances object providing the window.performance object and invoke the method you want to use on it
