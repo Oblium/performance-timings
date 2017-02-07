@@ -8,7 +8,7 @@ Basic usage is:
 
 1. Import the library from 'performances'
   - `import Performances from 'performances'`;
-2. Instantiate the Performances object providing the window.performance object and invoke the method you want to use on it
+2. Instantiate the Performances object providing the window.performance object (optional) and invoke the method you want to use on it
   - `var perf = new Performances(window.performance);`
   - `perf.getTotalTime(time => /* do stuffs with time */)`;
 3. You can use also the asJson method to get all info together:
