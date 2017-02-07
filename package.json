@@ -8,6 +8,10 @@
     "start": "webpack-dev-server --hot --inline",
     "build": "webpack"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Oblium/performance-timings.git"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
