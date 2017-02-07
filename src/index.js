@@ -3,7 +3,7 @@ const DEFAULT_POLLING_MS = 100;
 
 export default class Timings {
   constructor(performance) {
-    this._performaceObject = performance;
+    this._performaceObject = performance || window.performance;
     this._pollingMs = DEFAULT_POLLING_MS;
   }
 
