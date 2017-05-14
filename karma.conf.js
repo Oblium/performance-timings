@@ -17,12 +17,12 @@ webpackConfig.module.preLoaders = [{
 module.exports = function(config) {
   config.set({
     frameworks: ['jasmine'],
-    reporters: ['spec', 'threshold'],
+    reporters: ['spec', 'coverage-istanbul'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeCanaryHeadless'],
     singleRun: true,
     autoWatchBatchDelay: 300,
 
@@ -32,19 +32,35 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-      './src/index.js': ['webpack', 'coverage'],
-      './lib/**/*.js': ['webpack', 'coverage'],
       './test/**/*.js': ['babel', 'webpack']
     },
 
-    webpack: webpackConfig,
+    webpack: {
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            use: [{loader: 'babel-loader'}]
+          },
+          {
+            test: /\.js$/,
+            include: [path.resolve('src'), path.resolve('lib')],
+            loader: 'istanbul-instrumenter-loader',
+            options: {
+              esModules: true
+            }
+          }
+        ]
+      }
+    },
 
     webpackMiddleware: {
       noInfo: true
     },
-    coverageReporter: {
-      type: 'html',
-      dir: 'coverage/'
+    coverageIstanbulReporter: {
+      reports: ['text-summary', 'html', 'lcov'],
+      fixWebpackSourcePaths: true,
+      dir: 'target/'
     },
     thresholdReporter: {
       statements: 80,
@@ -53,7 +69,12 @@ module.exports = function(config) {
       lines: 80
     },
     specReporter: {
-      suppressSkipped: true
+      suppressErrorSummary: false,
+      suppressFailed: false,
+      suppressPassed: false,
+      suppressSkipped: true,
+      showSpecTiming: true,
+      failFast: false
     }
   });
 };

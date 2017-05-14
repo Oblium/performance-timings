@@ -8,7 +8,8 @@ describe('The library', () => {
     navigationStart: now,
     fetchStart: now + 2,
     responseEnd: now + 10,
-    loadEventEnd: now + 200
+    loadEventEnd: now + 200,
+    customEvent: now + 300
   };
 
   beforeEach(() => {
@@ -26,12 +27,14 @@ describe('The library', () => {
     fakePerformanceObject.timing.fetchStart = fakeTiming.fetchStart;
     fakePerformanceObject.timing.responseEnd = fakeTiming.responseEnd;
     fakePerformanceObject.timing.loadEventEnd = fakeTiming.loadEventEnd;
+    fakePerformanceObject.timing.customEvent = fakeTiming.customEvent;
   };
   const resetPerformanceObject = () => {
     fakePerformanceObject.timing.navigationStart = 0;
     fakePerformanceObject.timing.fetchStart = 0;
     fakePerformanceObject.timing.responseEnd = 0;
     fakePerformanceObject.timing.loadEventEnd = 0;
+    fakePerformanceObject.timing.customEvent = 0;
   };
 
   it('should exist', () => {
@@ -94,6 +97,22 @@ describe('The library', () => {
       libInstance.getTotalTime(spy);
 
       expect(spy).toHaveBeenCalledWith(fakeTiming.loadEventEnd - fakeTiming.navigationStart);
+    });
+
+    it('should return the correct time with custom event', () => {
+      const spy = jasmine.createSpy('cb');
+      setPerformanceObject();
+      libInstance.getTimeFor('customEvent', spy);
+
+      expect(spy).toHaveBeenCalledWith(fakeTiming.customEvent - fakeTiming.fetchStart);
+    });
+
+    it('should return the correct time with custom event', () => {
+      const spy = jasmine.createSpy('cb');
+      setPerformanceObject();
+      libInstance.getFrontendTimeFor('customEvent', spy);
+
+      expect(spy).toHaveBeenCalledWith(fakeTiming.customEvent - fakeTiming.navigationStart);
     });
 
     it('should return the correct json with timings', () => {

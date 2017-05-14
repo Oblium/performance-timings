@@ -35,6 +35,14 @@ export default class Timings {
     return this._checkAvailability(() => cb(this._diffBetween('loadEventEnd', 'navigationStart')));
   }
 
+  getTimeFor(event, cb) {
+    return this._checkAvailability(() => cb(this._diffBetween(event, 'fetchStart')));
+  }
+
+  getFrontendTimeFor(event, cb) {
+    return this._checkAvailability(() => cb(this._diffBetween(event, 'navigationStart')));
+  }
+
   asJson(cb) {
     return this._checkAvailability(() => cb({
       networkLatency: this._diffBetween('responseEnd', 'fetchStart'),
@@ -51,3 +59,7 @@ export default class Timings {
     return this.isAvailable() ? this._onLoad(cb) : cb(def);
   }
 }
+
+export const EVENTS = {
+
+};
